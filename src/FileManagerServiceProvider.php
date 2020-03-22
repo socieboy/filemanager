@@ -84,9 +84,10 @@ class FileManagerServiceProvider extends ServiceProvider
         ], 'filemanager.views');*/
 
         // Publishing assets.
-        /*$this->publishes([
+        $this->publishes([
             __DIR__.'/../resources/assets' => public_path('vendor/socieboy'),
-        ], 'filemanager.views');*/
+        ], 'filemanager.assets');
+
 
         // Publishing the translation files.
         /*$this->publishes([
