@@ -11,12 +11,12 @@
     </div>
     <div id="actions">
         <div id="group">
-            <button class="bg-blue-700 px-3 py-1 rounded text-white outline-none">Copy</button>
-            <button class="bg-blue-700 px-3 py-1 rounded text-white outline-none">Paste</button>
-            <button class="bg-blue-700 px-3 py-1 rounded text-white outline-none">Move</button>
-            <button class="bg-blue-700 px-3 py-1 rounded text-white outline-none">Remove</button>
-            <button class="bg-blue-700 px-3 py-1 rounded text-white outline-none">Share</button>
-            <button class="bg-blue-700 px-3 py-1 rounded text-white outline-none">Permissions</button>
+            <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Copy</button>
+            <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Paste</button>
+            <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Move</button>
+            <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Remove</button>
+            <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Share</button>
+            <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Permissions</button>
         </div>
     </div>
 </div>
