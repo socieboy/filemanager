@@ -8,6 +8,12 @@ class FileManagerController
 {
     public function index()
     {
-        return view('filemanager::index');
+        $directory = filemanager()->directory(request('path'));
+        return view('filemanager::index', compact('directory'));
+    }
+
+    public function show()
+    {
+        return filemanager()->file(request('path'));
     }
 }

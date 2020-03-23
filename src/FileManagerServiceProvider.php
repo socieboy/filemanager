@@ -52,8 +52,10 @@ class FileManagerServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('filemanager', function ($app) {
-            return new FileManager;
+            return new FileManager();
         });
+
+        require_once __DIR__ . '/helpers.php';
     }
 
     /**
@@ -85,7 +87,7 @@ class FileManagerServiceProvider extends ServiceProvider
 
         // Publishing assets.
         $this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/socieboy'),
+            __DIR__.'/../resources/assets' => public_path('vendor/filemanager'),
         ], 'filemanager.assets');
 
 
