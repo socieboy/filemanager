@@ -1,8 +1,9 @@
 <?php
 
-
 namespace Socieboy\FileManager\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Socieboy\FileManager\Http\Request\UploadFileRequest;
 
 class FileManagerController
 {
@@ -12,9 +13,10 @@ class FileManagerController
         return view('filemanager::index', compact('directory'));
     }
 
-    public function store()
+    public function store(UploadFileRequest $request)
     {
-
+        $key = Storage::putFileAs($request->path, $request->file, $request->file->getClientOriginalName(), config('filesystem.default'));
+        return filemanager()->file($key);
     }
 
     public function show()

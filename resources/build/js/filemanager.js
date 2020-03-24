@@ -18305,6 +18305,9 @@ window.fmApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     return {
       displayDropzone: false
     };
+  },
+  created: function created() {
+    this.$on('dropzone-success', this.displayDropzone = false);
   }
 });
 
@@ -18318,6 +18321,7 @@ window.fmApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /***/ (function(module, exports) {
 
 module.exports = {
+  props: ['path'],
   data: function data() {
     return {
       dropzone: null
@@ -18340,7 +18344,8 @@ module.exports = {
       this.dropzone.on("success", function (response, serverResponse) {
         _this.$emit('dropzone-success', serverResponse);
       });
-      this.dropzone.on('sending', function (file, xhr, formData) {//formData.append('key', value)
+      this.dropzone.on('sending', function (file, xhr, formData) {
+        formData.append('path', _this.path);
       });
       this.dropzone.on("error", function (response, serverResponse) {
         _this.$emit('dropzone-error', {
@@ -18403,10 +18408,13 @@ module.exports = {
   },
   computed: {
     isVideo: function isVideo() {
-      return this.onPreview && this.onPreview.mimetype.includes('video');
+      return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('video');
     },
     isImage: function isImage() {
-      return this.onPreview && this.onPreview.mimetype.includes('image');
+      return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('image');
+    },
+    isUnknow: function isUnknow() {
+      return this.onPreview && this.onPreview.mimetype == undefined;
     }
   }
 };

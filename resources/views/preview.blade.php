@@ -3,8 +3,10 @@
         <h3 class="mb-2 text-xs font-semibold tracking-wide uppercase">Preview</h3>
         <div v-if="onPreview">
             <div class="h-40 mb-4">
-                <img v-if="isImage" class="w-full rounded-lg shadow-md max-h-full object-cover object-center border border-gray-400"
+
+                <img v-if="isImage" class="bg-white w-full rounded-lg shadow-md max-h-full object-cover object-center border border-gray-400"
                      :src="onPreview.url" :alt="onPreview.filename">
+
                 <div v-if="isVideo" class="bg-black rounded-lg">
                     <video  id="video-player" class="w-full max-h-full rounded-lg video-js vjs-big-play-centered vjs-16-9" controls preload="auto" data-setup="{}">
                         <source :src="onPreview.url" :type='onPreview.mimetype'>
@@ -14,6 +16,10 @@
                         </p>
                     </video>
                 </div>
+
+                <div v-if="isUnknow" class="bg-white rounded-lg shadow-md h-full border border-gray-400 flex justify-center items-center text-gray-700">
+                    Preview Unavailable
+                </div>
             </div>
             <div id="details" class="mb-4">
                 <div class="font-semibold">Name: <span class="font-normal text-gray-600" v-text="onPreview.filename"></span></div>
@@ -21,7 +27,7 @@
                 <div class="font-semibold">Date: <span class="font-normal text-gray-600" v-text="onPreview.timestamp"></span></div>
                 <div class="font-semibold">Mime Type: <span class="font-normal text-gray-600" v-text="onPreview.mimetype"></span></div>
                 <div class="font-semibold">Visibility: <span class="font-normal text-gray-600" v-text="onPreview.visibility"></span></div>
-                <div class="break-words font-semibold">URL: <a :href="onPreview.url" class="font-normal text-gray-600" v-text="onPreview.url"></a></div>
+                <div class="break-words font-semibold">URL: <a :href="onPreview.url" target="_blank" class="font-normal text-gray-600" v-text="onPreview.url"></a></div>
             </div>
             <div id="actions">
                 <div id="group">

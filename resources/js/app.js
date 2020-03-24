@@ -27,5 +27,9 @@ window.fmApp = new Vue({
         return {
             displayDropzone: false,
         }
+    },
+
+    created(){
+        this.$on('dropzone-success', this.displayDropzone = false);
     }
 });

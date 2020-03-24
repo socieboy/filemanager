@@ -23,6 +23,7 @@ class File
         return array_merge([
             'url' => ($visibility == 'private')  ? $this->filesystem->temporaryUrl($this->path, now()->addMinutes(5)) : $this->filesystem->url($this->path),
             'visibility' =>  $visibility,
+            'mimetype' => $this->filesystem->getMimetype($this->path),
         ], $this->filesystem->getMetadata($this->path));
     }
 

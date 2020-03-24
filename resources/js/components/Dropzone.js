@@ -1,4 +1,7 @@
 module.exports = {
+
+    props: ['path'],
+
     data() {
         return {
             dropzone: null,
@@ -23,7 +26,7 @@ module.exports = {
                 this.$emit('dropzone-success', serverResponse);
             });
             this.dropzone.on('sending', (file, xhr, formData) => {
-                //formData.append('key', value)
+                formData.append('path', this.path)
             });
             this.dropzone.on("error", (response, serverResponse) => {
                 this.$emit('dropzone-error', {response, serverResponse});
