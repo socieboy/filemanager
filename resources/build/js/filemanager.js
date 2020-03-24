@@ -5742,6 +5742,94 @@ function __guardMethod__(obj, methodName, transform) {
 
 /***/ }),
 
+/***/ "./node_modules/pretty-bytes/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/pretty-bytes/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+const BYTE_UNITS = [
+	'B',
+	'kB',
+	'MB',
+	'GB',
+	'TB',
+	'PB',
+	'EB',
+	'ZB',
+	'YB'
+];
+
+const BIT_UNITS = [
+	'b',
+	'kbit',
+	'Mbit',
+	'Gbit',
+	'Tbit',
+	'Pbit',
+	'Ebit',
+	'Zbit',
+	'Ybit'
+];
+
+/*
+Formats the given number using `Number#toLocaleString`.
+- If locale is a string, the value is expected to be a locale-key (for example: `de`).
+- If locale is true, the system default locale is used for translation.
+- If no value for locale is specified, the number is returned unmodified.
+*/
+const toLocaleString = (number, locale) => {
+	let result = number;
+	if (typeof locale === 'string') {
+		result = number.toLocaleString(locale);
+	} else if (locale === true) {
+		result = number.toLocaleString();
+	}
+
+	return result;
+};
+
+module.exports = (number, options) => {
+	if (!Number.isFinite(number)) {
+		throw new TypeError(`Expected a finite number, got ${typeof number}: ${number}`);
+	}
+
+	options = Object.assign({bits: false}, options);
+	const UNITS = options.bits ? BIT_UNITS : BYTE_UNITS;
+
+	if (options.signed && number === 0) {
+		return ' 0 ' + UNITS[0];
+	}
+
+	const isNegative = number < 0;
+	const prefix = isNegative ? '-' : (options.signed ? '+' : '');
+
+	if (isNegative) {
+		number = -number;
+	}
+
+	if (number < 1) {
+		const numberString = toLocaleString(number, options.locale);
+		return prefix + numberString + ' ' + UNITS[0];
+	}
+
+	const exponent = Math.min(Math.floor(Math.log10(number) / 3), UNITS.length - 1);
+	// eslint-disable-next-line unicorn/prefer-exponentiation-operator
+	number = Number((number / Math.pow(1000, exponent)).toPrecision(3));
+	const numberString = toLocaleString(number, options.locale);
+
+	const unit = UNITS[exponent];
+
+	return prefix + numberString + ' ' + unit;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -18293,8 +18381,10 @@ window.Dropzone = __webpack_require__(/*! dropzone */ "./node_modules/dropzone/d
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$http = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$csrfToken = document.head.querySelector('meta[name="csrf-token"]').content; // Components
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$prettyBytes = __webpack_require__(/*! pretty-bytes */ "./node_modules/pretty-bytes/index.js"); // Components
 
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('fm-dropdown', __webpack_require__(/*! ./components/Dropdown */ "./packages/Socieboy/FileManager/resources/js/components/Dropdown.js"));
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('fm-dropzone', __webpack_require__(/*! ./components/Dropzone */ "./packages/Socieboy/FileManager/resources/js/components/Dropzone.js"));
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('fm-preview', __webpack_require__(/*! ./components/Preview */ "./packages/Socieboy/FileManager/resources/js/components/Preview.js"));
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('fm-files', __webpack_require__(/*! ./components/Files */ "./packages/Socieboy/FileManager/resources/js/components/Files.js"));
@@ -18310,6 +18400,37 @@ window.fmApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     this.$on('dropzone-success', this.displayDropzone = false);
   }
 });
+
+/***/ }),
+
+/***/ "./packages/Socieboy/FileManager/resources/js/components/Dropdown.js":
+/*!***************************************************************************!*\
+  !*** ./packages/Socieboy/FileManager/resources/js/components/Dropdown.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  data: function data() {
+    return {
+      isOpen: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    var handleEscape = function handleEscape(e) {
+      if (e.key === 'Esc' || e.key === 'Escape') {
+        _this.isOpen = false;
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    this.$once('hook:beforeDestroy', function () {
+      document.removeEventListener('keydown', handleEscape);
+    });
+  }
+};
 
 /***/ }),
 
@@ -18404,6 +18525,26 @@ module.exports = {
       this.$http.get("/filemanager/preview?path=".concat(path)).then(function (response) {
         _this2.onPreview = response.data;
       });
+    },
+    copy: function copy(path) {},
+    paste: function paste(destination) {
+      this.$http.post("/filemanager/copy", {
+        origin: '',
+        destination: destination
+      }).then(function (response) {});
+    },
+    remove: function remove(path) {
+      var result = confirm('Do you want to delete this file?');
+
+      if (result) {
+        this.$http["delete"]("/filemanager/remove", {
+          data: {
+            path: path
+          }
+        }).then(function (data) {})["catch"](function (error) {
+          console.log(error);
+        });
+      }
     }
   },
   computed: {

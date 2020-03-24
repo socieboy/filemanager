@@ -23,22 +23,22 @@
             </div>
             <div id="details" class="mb-4">
                 <div class="font-semibold">Name: <span class="font-normal text-gray-600" v-text="onPreview.filename"></span></div>
-                <div class="font-semibold">Size: <span class="font-normal text-gray-600" v-text="onPreview.size + 'bytes'"></span></div>
+                <div class="font-semibold">Size: <span class="font-normal text-gray-600" v-text="$prettyBytes(onPreview.size)"></span></div>
                 <div class="font-semibold">Date: <span class="font-normal text-gray-600" v-text="onPreview.timestamp"></span></div>
-                <div class="font-semibold">Mime Type: <span class="font-normal text-gray-600" v-text="onPreview.mimetype"></span></div>
+                <div class="font-semibold">Mime: <span class="font-normal text-gray-600" v-text="onPreview.mimetype"></span></div>
                 <div class="font-semibold">Visibility: <span class="font-normal text-gray-600" v-text="onPreview.visibility"></span></div>
                 <div class="break-words font-semibold">URL: <a :href="onPreview.url" target="_blank" class="font-normal text-gray-600" v-text="onPreview.url"></a></div>
             </div>
             <div id="actions">
                 <div id="group">
-                    <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Copy</button>
-                    <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Paste</button>
+                    <button @click="copy(onPreview.path)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Copy</button>
                     <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Move</button>
-                    <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Remove</button>
+                    <button @click="remove(onPreview.path)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Remove</button>
                     <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Share</button>
                     <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Permissions</button>
                 </div>
             </div>
         </div>
+        <button @click="paste(`{{ $directory->path }}`)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Paste</button>
     </div>
 </fm-preview>

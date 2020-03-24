@@ -18,9 +18,4 @@ class FileManagerController
         $key = Storage::putFileAs($request->path, $request->file, $request->file->getClientOriginalName(), config('filesystem.default'));
         return filemanager()->file($key);
     }
-
-    public function show()
-    {
-        return filemanager()->file(request('path'));
-    }
 }

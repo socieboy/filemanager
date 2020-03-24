@@ -2,6 +2,7 @@
 
 window.Dropzone = require('dropzone')
 
+
 import Vue from 'vue';
 
 /**
@@ -12,8 +13,10 @@ import Vue from 'vue';
 Vue.prototype.$http = require('axios');
 Vue.prototype.$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.prototype.$csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+Vue.prototype.$prettyBytes = require('pretty-bytes');
 
 // Components
+Vue.component('fm-dropdown', require('./components/Dropdown'));
 Vue.component('fm-dropzone', require('./components/Dropzone'));
 Vue.component('fm-preview', require('./components/Preview'));
 Vue.component('fm-files', require('./components/Files'));
@@ -31,5 +34,6 @@ window.fmApp = new Vue({
 
     created(){
         this.$on('dropzone-success', this.displayDropzone = false);
-    }
+    },
+
 });

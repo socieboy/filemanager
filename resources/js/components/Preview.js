@@ -12,11 +12,33 @@ module.exports = {
         })
     },
 
-    methods:{
-        displayPreview(path){
+    methods: {
+        displayPreview(path) {
             this.$http.get(`/filemanager/preview?path=${path}`).then(response => {
                 this.onPreview = response.data;
             })
+        },
+
+        copy(path) {
+        },
+
+        paste(destination) {
+            this.$http.post(`/filemanager/copy`, {
+                origin: '',
+                destination: destination
+            }).then(response => {
+
+            })
+        },
+
+        remove(path){
+            var result = confirm('Do you want to delete this file?');
+            if(result){
+                this.$http.delete(`/filemanager/remove`, {data: { path: path }}).then(data => {
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
         }
     },
 
