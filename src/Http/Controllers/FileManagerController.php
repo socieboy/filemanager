@@ -12,6 +12,11 @@ class FileManagerController
         return view('filemanager::index', compact('directory'));
     }
 
+    public function store()
+    {
+
+    }
+
     public function show()
     {
         return filemanager()->file(request('path'));
