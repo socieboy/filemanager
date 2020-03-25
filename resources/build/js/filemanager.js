@@ -18554,6 +18554,12 @@ module.exports = {
     isImage: function isImage() {
       return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('image');
     },
+    isText: function isText() {
+      return this.onPreview && this.onPreview.mimetype && (this.onPreview.mimetype.includes('text/plain') || this.onPreview.mimetype.includes('officedocument'));
+    },
+    isPDF: function isPDF() {
+      return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('application/pdf');
+    },
     isUnknow: function isUnknow() {
       return this.onPreview && this.onPreview.mimetype == undefined;
     }

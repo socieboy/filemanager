@@ -17,7 +17,11 @@
                     </video>
                 </div>
 
-                <div v-if="isUnknow" class="bg-white rounded-lg shadow-md h-full border border-gray-400 flex justify-center items-center text-gray-700">
+                <div v-if="isPDF" class="bg-black rounded-lg flex items-center">
+                    <iframe :src="onPreview.url" class="w-full h-40"></iframe>
+                </div>
+
+                <div v-if="isText || isUnknow" class="bg-white rounded-lg shadow-md h-full border border-gray-400 flex justify-center items-center text-gray-700">
                     Preview Unavailable
                 </div>
             </div>
