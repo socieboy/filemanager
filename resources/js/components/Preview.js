@@ -33,19 +33,19 @@ module.exports = {
 
     computed:{
         isVideo(){
-            return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('video');
+            return this.onPreview && this.onPreview.mimetype.includes('video');
         },
 
         isImage(){
-            return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('image');
+            return this.onPreview && this.onPreview.mimetype.includes('image');
         },
 
         isText(){
-            return this.onPreview && this.onPreview.mimetype && (this.onPreview.mimetype.includes('text/plain') || this.onPreview.mimetype.includes('officedocument'));
+            return this.onPreview && (this.onPreview.mimetype.includes('text/plain') || this.onPreview.mimetype.includes('officedocument'));
         },
 
         isPDF(){
-            return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('application/pdf');
+            return this.onPreview && this.onPreview.mimetype.includes('application/pdf');
         },
 
         isUnknow(){

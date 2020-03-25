@@ -18593,16 +18593,16 @@ module.exports = {
   },
   computed: {
     isVideo: function isVideo() {
-      return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('video');
+      return this.onPreview && this.onPreview.mimetype.includes('video');
     },
     isImage: function isImage() {
-      return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('image');
+      return this.onPreview && this.onPreview.mimetype.includes('image');
     },
     isText: function isText() {
-      return this.onPreview && this.onPreview.mimetype && (this.onPreview.mimetype.includes('text/plain') || this.onPreview.mimetype.includes('officedocument'));
+      return this.onPreview && (this.onPreview.mimetype.includes('text/plain') || this.onPreview.mimetype.includes('officedocument'));
     },
     isPDF: function isPDF() {
-      return this.onPreview && this.onPreview.mimetype && this.onPreview.mimetype.includes('application/pdf');
+      return this.onPreview && this.onPreview.mimetype.includes('application/pdf');
     },
     isUnknow: function isUnknow() {
       return this.onPreview && this.onPreview.mimetype == undefined;

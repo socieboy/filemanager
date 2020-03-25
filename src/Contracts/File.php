@@ -22,7 +22,7 @@ class File
     public function withData()
     {
         $metadata = $this->filesystem->getMetadata($this->path);
-        $metadata['mimetype'] = isset($metadata['mimetype']) ?: $this->filesystem->getMimetype($this->path);
+        $metadata['mimetype'] = isset($metadata['mimetype']) ? $metadata['mimetype']: $this->filesystem->getMimetype($this->path);
         $data = [
             'filename' => $this->name,
             'url' => $this->getUrl(),
@@ -34,7 +34,7 @@ class File
 
     public function getUrl()
     {
-        if ($this->isPrivate() && config('filesystems.default') != 'local') {
+        if ($this->isPrivate() && config('filesystems.disk') != 'local') {
             return $this->filesystem->temporaryUrl($this->path, now()->addMinutes(5));
         }
         return $this->filesystem->url($this->path);
