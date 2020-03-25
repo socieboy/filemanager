@@ -24,7 +24,7 @@ class UploadFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'path' => 'required',
+            'path' => '',
             'file' => 'required|file:max' . config('filemanager.max_upload_filesize')
         ];
     }
