@@ -36,4 +36,17 @@ window.fmApp = new Vue({
         this.$on('dropzone-success', this.displayDropzone = false);
     },
 
+    methods:{
+        createDirectory(path){
+            var name = prompt('Directory Name:');
+            if(name){
+                this.$http.post(`/filemanager/directories`, {path:`${path}/${name}`}).then(response => {
+                    location.reload()
+                }).catch(error => {
+                    alert(error.response.data.message)
+                })
+            }
+        }
+    }
+
 });

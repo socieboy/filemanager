@@ -14,9 +14,15 @@
 
             <div id="header" class="w-full h-12 px-4 flex items-center justify-between bg-gray-200 md:rounded-t border-b border-gray-400">
                 <h1 class="font-semibold tracking-wide uppercase text-teal-700">File Manager</h1>
-                <button @click="displayDropzone = !displayDropzone" class="block px-4 py-1 rounded text-sm m-0 border-2 font-semibold text-teal-700 border-teal-700 focus:outline-none">
-                    Upload File
-                </button>
+               <div class="flex">
+                   <button @click="displayDropzone = !displayDropzone"
+                           class="block px-4 py-1 rounded text-sm m-0 border-2 font-semibold text-teal-700 border-teal-700 focus:outline-none hover:bg-teal-700 hover:text-white">
+                       Upload File
+                   </button>
+                   <button @click="createDirectory(`{{ $directory->path }}`)" class="ml-2 block px-4 py-1 rounded text-sm m-0 border-2 font-semibold text-teal-700 border-teal-700 focus:outline-none hover:bg-teal-700 hover:text-white">
+                       Create Folder
+                   </button>
+               </div>
             </div>
 
             <div id="body" class="flex flex-1 items-stretch flex-col-reverse md:flex-row ">

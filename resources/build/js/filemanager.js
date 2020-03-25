@@ -18398,6 +18398,21 @@ window.fmApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   },
   created: function created() {
     this.$on('dropzone-success', this.displayDropzone = false);
+  },
+  methods: {
+    createDirectory: function createDirectory(path) {
+      var name = prompt('Directory Name:');
+
+      if (name) {
+        this.$http.post("/filemanager/directories", {
+          path: "".concat(path, "/").concat(name)
+        }).then(function (response) {
+          location.reload();
+        })["catch"](function (error) {
+          alert(error.response.data.message);
+        });
+      }
+    }
   }
 });
 
@@ -18429,6 +18444,37 @@ module.exports = {
     this.$once('hook:beforeDestroy', function () {
       document.removeEventListener('keydown', handleEscape);
     });
+  },
+  methods: {
+    renameFolder: function renameFolder(path) {
+      var name = prompt('New name:');
+
+      if (name) {
+        this.$http.patch("/filemanager/directories", {
+          path: path,
+          name: name
+        }).then(function (response) {
+          location.reload();
+        })["catch"](function (error) {
+          alert(error.response.data.message);
+        });
+      }
+    },
+    removeFolder: function removeFolder(path) {
+      var response = confirm('Confirm this action:');
+
+      if (response) {
+        this.$http["delete"]("/filemanager/directories", {
+          data: {
+            path: path
+          }
+        }).then(function (data) {
+          location.reload();
+        })["catch"](function (error) {
+          console.log(error.response.data.message);
+        });
+      }
+    }
   }
 };
 
@@ -18526,13 +18572,6 @@ module.exports = {
         _this2.onPreview = response.data;
       });
     },
-    copy: function copy(path) {},
-    paste: function paste(destination) {
-      this.$http.post("/filemanager/copy", {
-        origin: '',
-        destination: destination
-      }).then(function (response) {});
-    },
     remove: function remove(path) {
       var result = confirm('Do you want to delete this file?');
 
@@ -18544,7 +18583,7 @@ module.exports = {
         }).then(function (data) {
           location.reload();
         })["catch"](function (error) {
-          console.log(error);
+          alert(error.response.data.message);
         });
       }
     }
