@@ -1,9 +1,5 @@
 <?php
 
-use Socieboy\FileManager\Http\Controllers\FileController;
-use Socieboy\FileManager\Http\Controllers\DirectoryController;
-use Socieboy\FileManager\Http\Controllers\FileManagerController;
-
 Route::get('', FileManagerController::class.'@index');
 Route::post('', FileManagerController::class.'@store');
 

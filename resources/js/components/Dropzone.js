@@ -23,13 +23,13 @@ module.exports = {
                 }
             });
             this.dropzone.on("success", (response, serverResponse) => {
-                this.$emit('dropzone-success', serverResponse);
+                fmBroadcast.$emit('dropzone-success', serverResponse);
             });
             this.dropzone.on('sending', (file, xhr, formData) => {
                 formData.append('path', this.path)
             });
             this.dropzone.on("error", (response, serverResponse) => {
-                this.$emit('dropzone-error', {response, serverResponse});
+                broadcast.$emit('dropzone-error', {response, serverResponse});
             });
         }
     }

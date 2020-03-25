@@ -2,7 +2,9 @@
 
 return [
 
-    'prefix' => env('FILE_MANAGER_ROUTE_PREFIX', 'filemanager'),
+    'path' => 'filemanager',
+
+    'middleware' => ['web'],
 
     'max_upload_filesize' => 1024,
 

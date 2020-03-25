@@ -18397,7 +18397,10 @@ window.fmApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     };
   },
   created: function created() {
-    this.$on('dropzone-success', this.displayDropzone = false);
+    fmBroadcast.$on('dropzone-success', this.displayDropzone = false);
+    fmBroadcast.$on('dropzone-success', function () {
+      location.reload();
+    });
   },
   methods: {
     createDirectory: function createDirectory(path) {
@@ -18509,13 +18512,13 @@ module.exports = {
         }
       });
       this.dropzone.on("success", function (response, serverResponse) {
-        _this.$emit('dropzone-success', serverResponse);
+        fmBroadcast.$emit('dropzone-success', serverResponse);
       });
       this.dropzone.on('sending', function (file, xhr, formData) {
         formData.append('path', _this.path);
       });
       this.dropzone.on("error", function (response, serverResponse) {
-        _this.$emit('dropzone-error', {
+        broadcast.$emit('dropzone-error', {
           response: response,
           serverResponse: serverResponse
         });

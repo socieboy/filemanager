@@ -32,8 +32,11 @@ window.fmApp = new Vue({
         }
     },
 
-    created(){
-        this.$on('dropzone-success', this.displayDropzone = false);
+    created() {
+        fmBroadcast.$on('dropzone-success', this.displayDropzone = false);
+        fmBroadcast.$on('dropzone-success', () => {
+            location.reload()
+        });
     },
 
     methods:{

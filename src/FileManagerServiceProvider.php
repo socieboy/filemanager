@@ -14,32 +14,51 @@ class FileManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'socieboy');
-         $this->loadViewsFrom(__DIR__.'/../resources/views', 'filemanager');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-         $this->defineRoutes();
-
-        // Publishing is only necessary when using the CLI.
-        if ($this->app->runningInConsole()) {
-            $this->bootForConsole();
-        }
+        $this->registerRoutes();
+        $this->registerResources();
+        $this->defineAssetPublishing();
     }
 
     /**
-     * Define the Sanctum routes.
+     * Register the File Manager routes.
      *
      * @return void
      */
-    protected function defineRoutes()
+    protected function registerRoutes()
     {
-        if ($this->app->routesAreCached()) {
-            return;
-        }
-
-        Route::middleware('web')
-        ->prefix(config('filemanager.prefix'))
-        ->group(__DIR__.'/routes.php');
+        Route::group([
+            'prefix' => config('filemanager.path'),
+            'namespace' => 'Socieboy\FileManager\Http\Controllers',
+            'middleware' => config('filemanager.middleware', 'web'),
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        });
     }
+
+    /**
+     * Register the File Manager resources.
+     *
+     * @return void
+     */
+    protected function registerResources()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'filemanager');
+    }
+
+    /**
+     * Define the asset publishing configuration.
+     *
+     * @return void
+     */
+    protected function defineAssetPublishing()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                FILEMANAGER_PATH . '/public' => public_path('vendor/filemanager'),
+            ], 'filemanager-assets');
+        }
+    }
+
 
     /**
      * Register any package services.
@@ -48,9 +67,13 @@ class FileManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/filemanager.php', 'filemanager');
+        if (! defined('FILEMANAGER_PATH')) {
+            define('FILEMANAGER_PATH', realpath(__DIR__ . '/../'));
+        }
 
-        // Register the service the package provides.
+        $this->configure();
+        $this->offerPublishing();
+
         $this->app->singleton('filemanager', function ($app) {
             return new FileManager();
         });
@@ -59,44 +82,28 @@ class FileManagerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['filemanager'];
-    }
-
-    /**
-     * Console-specific booting.
+     * Setup the resource publishing groups for Horizon.
      *
      * @return void
      */
-    protected function bootForConsole()
+    protected function offerPublishing()
     {
-        // Publishing the configuration file.
-        $this->publishes([
-            __DIR__.'/../config/filemanager.php' => config_path('filemanager.php'),
-        ], 'filemanager.config');
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/filemanager.php.php' => config_path('filemanager.php'),
+            ], 'filemanager-config');
+        }
+    }
 
-        // Publishing the views.
-        /*$this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/socieboy'),
-        ], 'filemanager.views');*/
-
-        // Publishing assets.
-        $this->publishes([
-            __DIR__.'/../resources/build' => public_path('vendor/filemanager'),
-        ], 'filemanager.assets');
-
-
-        // Publishing the translation files.
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/socieboy'),
-        ], 'filemanager.views');*/
-
-        // Registering package commands.
-        // $this->commands([]);
+    /**
+     * Setup the configuration for Horizon.
+     *
+     * @return void
+     */
+    protected function configure()
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/filemanager.php', 'filemanager'
+        );
     }
 }
