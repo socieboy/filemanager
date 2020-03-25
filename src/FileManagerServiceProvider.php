@@ -87,7 +87,7 @@ class FileManagerServiceProvider extends ServiceProvider
 
         // Publishing assets.
         $this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/filemanager'),
+            __DIR__.'/../resources/build' => public_path('vendor/filemanager'),
         ], 'filemanager.assets');
 
 
