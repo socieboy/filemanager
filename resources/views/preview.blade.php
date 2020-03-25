@@ -2,7 +2,7 @@
     <div id="preview" class="text-sm flex-1 md:flex-none md:w-1/4 p-4 bg-blue-100 border-t md:border-0 md:border-r border-gray-400">
         <h3 class="mb-2 text-xs font-semibold tracking-wide uppercase">Preview</h3>
         <div v-if="onPreview">
-            <div class="h-40 mb-4">
+            <div class="mb-4">
 
                 <img v-if="isImage" class="bg-white w-full rounded-lg shadow-md max-h-full object-cover object-center border border-gray-400"
                      :src="onPreview.url" :alt="onPreview.filename">
