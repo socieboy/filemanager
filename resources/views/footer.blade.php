@@ -1,6 +1,6 @@
 <div id="breadcrumb">
     <a class="hover:text-blue-700" href="{{ empty($directory->path) ? '#' : '/filemanager' }}">
-        <a href="{{ url(config('filemanager.return_url')) }}">{{ url(config('filemanager.return_url')) }}</a> | Home
+        <a href="{{ url(config('filemanager.return_url')) }}">{{ url(config('filemanager.return_url')) }}</a>
     </a>
     @foreach($directory->breadcrumb() as $item)
         <span>/</span>
