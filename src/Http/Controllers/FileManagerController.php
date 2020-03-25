@@ -2,7 +2,6 @@
 
 namespace Socieboy\FileManager\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use Socieboy\FileManager\Http\Request\UploadFileRequest;
 
 class FileManagerController
@@ -15,7 +14,7 @@ class FileManagerController
 
     public function store(UploadFileRequest $request)
     {
-        $key = Storage::putFileAs($request->path, $request->file, $request->file->getClientOriginalName(), config('filesystem.default'));
+        $key = filemanager()->uploadFile($request->path, $request->file);
         return filemanager()->file($key);
     }
 }

@@ -24,6 +24,7 @@ class File
         $metadata = $this->filesystem->getMetadata($this->path);
         $metadata['mimetype'] = isset($metadata['mimetype']) ?: $this->filesystem->getMimetype($this->path);
         $data = [
+            'filename' => $this->name,
             'url' => $this->getUrl(),
             'visibility' =>  $this->visibility,
         ];

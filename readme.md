@@ -17,9 +17,9 @@ $ composer require socieboy/filemanager
 
 ## Usage
 
-php artisan vendor:publish --tag=filemanager.config
-php artisan vendor:publish --tag=filemanager.views
-php artisan vendor:publish --tag=filemanager.assets
+php artisan vendor:publish --tag=filemanager-assets
+php artisan vendor:publish --tag=filemanager-config
+php artisan vendor:publish --tag=filemanager-views
 
 ## Change log
 

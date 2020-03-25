@@ -2,6 +2,7 @@
 
 namespace Socieboy\FileManager;
 
+use Illuminate\Http\UploadedFile;
 use Socieboy\FileManager\Contracts\Directory;
 use Socieboy\FileManager\Contracts\File;
 
@@ -13,7 +14,12 @@ class FileManager
 
     public function __construct()
     {
-        $this->filesystem = resolve('filesystem')->disk(config('filesystem.default'));
+        $this->filesystem = resolve('filesystem')->disk(config('filemanager.disk'));
+    }
+
+    public function uploadFile($path, UploadedFile $file)
+    {
+        return $this->filesystem->putFileAs($path, $file, $file->getClientOriginalName());
     }
 
     public function directory($path)
@@ -24,5 +30,10 @@ class FileManager
     public function file($path)
     {
         return (new File($this->filesystem, $path))->withData();
+    }
+
+    public function filesystem()
+    {
+        return $this->filesystem;
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Socieboy\FileManager\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-
 class FileController
 {
     public function copy()
@@ -16,9 +14,9 @@ class FileController
             $int = '-';
             $newPath = dirname($data['origin']) . '/copy' . $int . basename($data['origin']);
             $int++;
-        } while (Storage::exists($newPath));
+        } while (filemanager()->filesystem()->exists($newPath));
 
-        Storage::copy($data['origin'], $newPath);
+        filemanager()->filesystem()->copy($data['origin'], $newPath);
     }
 
     public function show()
@@ -29,6 +27,6 @@ class FileController
     public function destroy()
     {
         $data = request()->validate(['path' => 'required']);
-        Storage::delete($data['path']);
+        filemanager()->filesystem()->delete($data['path']);
     }
 }

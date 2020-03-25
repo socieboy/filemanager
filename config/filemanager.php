@@ -2,6 +2,8 @@
 
 return [
 
+    'disk' => 'local',
+
     'path' => 'filemanager',
 
     'middleware' => ['web'],
