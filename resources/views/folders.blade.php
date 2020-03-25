@@ -21,6 +21,7 @@
                         </button>
                         <div v-if="isOpen" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl z-10">
                             <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white" href="">Open</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white" href="">Compress</a>
                             <div class="border border-gray-200 my-1 mx-2"></div>
                             <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white" href="">Copy</a>
                             <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white" href="">Move</a>

@@ -18541,7 +18541,9 @@ module.exports = {
           data: {
             path: path
           }
-        }).then(function (data) {})["catch"](function (error) {
+        }).then(function (data) {
+          location.reload();
+        })["catch"](function (error) {
           console.log(error);
         });
       }

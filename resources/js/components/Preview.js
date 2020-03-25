@@ -35,6 +35,7 @@ module.exports = {
             var result = confirm('Do you want to delete this file?');
             if(result){
                 this.$http.delete(`/filemanager/remove`, {data: { path: path }}).then(data => {
+                    location.reload()
                 }).catch(error => {
                     console.log(error)
                 })
