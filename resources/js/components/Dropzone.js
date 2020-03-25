@@ -29,7 +29,7 @@ module.exports = {
                 formData.append('path', this.path)
             });
             this.dropzone.on("error", (response, serverResponse) => {
-                broadcast.$emit('dropzone-error', {response, serverResponse});
+                fmBroadcast.$emit('dropzone-error', {response, serverResponse});
             });
         }
     }

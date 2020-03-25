@@ -18518,7 +18518,7 @@ module.exports = {
         formData.append('path', _this.path);
       });
       this.dropzone.on("error", function (response, serverResponse) {
-        broadcast.$emit('dropzone-error', {
+        fmBroadcast.$emit('dropzone-error', {
           response: response,
           serverResponse: serverResponse
         });
