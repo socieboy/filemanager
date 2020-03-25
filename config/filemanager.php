@@ -2,7 +2,7 @@
 
 return [
 
-    'disk' => 'local',
+    'disk' => 's3',
 
     'path' => 'filemanager',
 

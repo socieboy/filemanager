@@ -34,7 +34,7 @@ class File
 
     public function getUrl()
     {
-        if ($this->isPrivate() && config('filesystems.disk') != 'local') {
+        if ($this->isPrivate() && config('filemanager.disk') != 'local') {
             return $this->filesystem->temporaryUrl($this->path, now()->addMinutes(5));
         }
         return $this->filesystem->url($this->path);
