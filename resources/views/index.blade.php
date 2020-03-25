@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>File Manager</title>
-    <link rel="stylesheet" href="{{ mix('vendor/filemanager/filemanager.css') }}">
+    <link rel="stylesheet" href="{{ asset(mix('app.css', 'vendor/filemanager')) }}">
 </head>
 <body>
     <div class="h-screen bg-teal-700 md:p-10">
@@ -41,6 +41,6 @@
         </div>
 
     </div>
-    <script src="{{ mix('vendor/filemanager/filemanager.js') }}"></script>
+    <script src="{{ asset(mix('app.js', 'vendor/filemanager')) }}"></script>
 </body>
 </html>

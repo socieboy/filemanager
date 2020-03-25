@@ -90,7 +90,7 @@ class FileManagerServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/filemanager.php.php' => config_path('filemanager.php'),
+                __DIR__.'/../config/filemanager.php' => config_path('filemanager.php'),
             ], 'filemanager-config');
         }
     }
