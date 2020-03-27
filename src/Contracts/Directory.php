@@ -37,6 +37,8 @@ class Directory
     {
         $this->files = collect($this->filesystem->files($this->path))->map(function ($file) {
             return new File($this->filesystem, $file);
+        })->filter(function($file){
+            return !in_array($file->extension, config('filemanager.ignore_extensions'));
         });
     }
 

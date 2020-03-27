@@ -8,6 +8,7 @@ class File
 {
     public $path;
     public $name;
+    public $extension;
     protected $filesystem;
     protected $visibility;
 
@@ -17,6 +18,9 @@ class File
         $this->path = $path;
         $this->name = basename($path);
         $this->fetchVisibility();
+        // Get info
+        $info = pathinfo($this->name);
+        $this->extension = $info['extension'];
     }
 
     public function withData()
