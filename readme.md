@@ -31,6 +31,19 @@ Please see the [changelog](changelog.md) for more information on what has change
 $ composer test
 ```
 
+## ToDo
+- [ ] Rename
+- [ ] Move
+- [ ] Download
+- [ ] File browser on sidebar 
+- [ ] Toggle mosaic view
+- [ ] Right-Click menu
+- [ ] Reload function
+- [ ] Imagen editor
+- [ ] Use from modal
+- [ ] Search
+- [ ] Auto-generate image thumbnails
+
 ## Contributing
 
 Please see [contributing.md](contributing.md) for details and a todolist.
