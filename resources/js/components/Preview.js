@@ -6,15 +6,15 @@ module.exports = {
         }
     },
 
-    created(){
-        fmBroadcast.$on('fm-select', path => {
+    created() {
+        bus.$on('fm-select', path => {
             this.displayPreview(path);
         })
     },
 
     methods: {
         displayPreview(path) {
-            this.$http.get(`/filemanager/preview?path=${path}`).then(response => {
+            this.$http.get(`/filemanager/file?path=${path}`).then(response => {
                 this.onPreview = response.data;
             })
         },
@@ -22,7 +22,7 @@ module.exports = {
         remove(path){
             var result = confirm('Do you want to delete this file?');
             if(result){
-                this.$http.delete(`/filemanager/remove`, {data: { path: path }}).then(data => {
+                this.$http.delete(`/filemanager/file`, {data: { path: path }}).then(data => {
                     location.reload()
                 }).catch(error => {
                     alert(error.response.data.message)

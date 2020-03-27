@@ -1,14 +1,15 @@
 <?php
 
 Route::get('', FileManagerController::class.'@index');
-Route::post('', FileManagerController::class.'@store');
 
 // Folders
-Route::post('directories', DirectoryController::class.'@store');
-Route::patch('directories', DirectoryController::class.'@update');
-Route::delete('directories', DirectoryController::class.'@destroy');
+Route::get('directory', DirectoryController::class.'@index');
+Route::post('directory', DirectoryController::class.'@store');
+Route::patch('directory', DirectoryController::class.'@update');
+Route::delete('directory', DirectoryController::class.'@destroy');
 
 // Files
-Route::delete('remove', FileController::class.'@destroy');
-Route::post('copy', FileController::class.'@copy');
-Route::get('preview', FileController::class.'@show');
+Route::post('file', FileController::class.'@store');
+Route::post('file/copy', FileController::class.'@copy');
+Route::get('file', FileController::class.'@show');
+Route::delete('file', FileController::class.'@destroy');

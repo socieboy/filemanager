@@ -1,10 +1,14 @@
 module.exports = {
 
+    props:['directory'],
+
     data(){
         return {
+            folder: this.directory,
             isOpen: false,
         }
     },
+
 
     created() {
         const handleEscape = (e) => {
@@ -19,22 +23,23 @@ module.exports = {
     },
 
     methods:{
-        renameFolder(path){
+        renameFolder(){
             var name = prompt('New name:');
             if(name) {
-                this.$http.patch(`/filemanager/directories`, {path: path, name: name}).then(response => {
-                    location.reload()
+                this.$http.patch(`/filemanager/directory`, {path: this.directory.path, name: name}).then(response => {
+                    this.folder.name = name;
+                    this.isOpen = false;
                 }).catch(error => {
                     alert(error.response.data.message)
                 })
             }
         },
 
-        removeFolder(path){
+        removeFolder(){
             var response = confirm('Confirm this action:');
             if(response) {
-                this.$http.delete(`/filemanager/directories`, {data: { path: path }}).then(data => {
-                    location.reload()
+                this.$http.delete(`/filemanager/directory`, {data: { path: this.directory.path }}).then(data => {
+                    // location.reload()
                 }).catch(error => {
                     console.log(error.response.data.message)
                 })

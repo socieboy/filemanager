@@ -1,7 +1,6 @@
-// window._ = require('lodash');
+window._ = require('lodash');
 
 window.Dropzone = require('dropzone')
-
 
 import Vue from 'vue';
 
@@ -21,35 +20,42 @@ Vue.component('fm-dropzone', require('./components/Dropzone'));
 Vue.component('fm-preview', require('./components/Preview'));
 Vue.component('fm-files', require('./components/Files'));
 
-window.fmBroadcast = new Vue();
-window.fmApp = new Vue({
+window.bus = new Vue();
+window.app = new Vue({
 
     el: '#filemanager',
 
     data(){
         return {
             displayDropzone: false,
+            viewDirectory: null,
         }
     },
 
     created() {
-        fmBroadcast.$on('dropzone-success', this.displayDropzone = false);
-        fmBroadcast.$on('dropzone-success', () => {
-            location.reload()
-        });
+        this.openDirectory('/');
+        // fmBroadcast.$on('dropzone-success', this.displayDropzone = false);
+        // fmBroadcast.$on('dropzone-success', () => {
+        //     location.reload()
+        // });
     },
 
     methods:{
-        createDirectory(path){
+        openDirectory(path){
+            this.$http.get(`/filemanager/directory?path=${path}`).then(response => {
+                this.viewDirectory = response.data.directory
+                bus.$emit('directory', this.viewDirectory)
+            });
+        },
+        createDirectory(){
             var name = prompt('Directory Name:');
             if(name){
-                this.$http.post(`/filemanager/directories`, {path:`${path}/${name}`}).then(response => {
-                    location.reload()
+                this.$http.post(`/filemanager/directory`, {path: this.viewDirectory.path, name: name}).then(response => {
+                    this.viewDirectory.subdirectories.push(response.data.directory)
                 }).catch(error => {
                     alert(error.response.data.message)
                 })
             }
         }
     }
-
 });

@@ -2,8 +2,21 @@
 
 namespace Socieboy\FileManager\Http\Controllers;
 
+use Socieboy\FileManager\Http\Request\UploadFileRequest;
+
 class FileController
 {
+
+    public function store(UploadFileRequest $request)
+    {
+        extract($request->validate([
+            'path' => '',
+            'file' => 'required|file'
+        ]));
+        $key = filemanager()->uploadFile($path, $file);
+        return filemanager()->file($key);
+    }
+
     public function copy()
     {
         $data = request()->validate([

@@ -10,30 +10,25 @@ class Directory
     public $name;
     protected $filesystem;
     public $parentPath;
-    public $directories;
+    public $subdirectories;
     public $files;
 
     public function __construct(FilesystemAdapter $filesystem, $path)
     {
         $this->filesystem = $filesystem;
         $this->path = $path;
-        $this->name = basename($path);
-        $this->parentPath = dirname($path);
-        $this->directories();
+        $this->name = ($path == '/') ? 'root' : basename($path);
+        $this->parentPath = ($path == '/') ? null : dirname($path);
+        $this->subdirectories();
         $this->files();
     }
 
-    public function parentPath()
+    public function subdirectories()
     {
-        return '/';
-    }
-
-    public function directories()
-    {
-        $this->directories = collect($this->filesystem->directories($this->path))->map(function ($dir) {
+        $this->subdirectories = collect($this->filesystem->directories($this->path))->map(function ($dir) {
             return (object)[
                 'name' => basename($dir),
-                'path' => $dir
+                'path' => ($dir == '/') ? '/' : '/'.basename($dir)
             ];
         });
     }

@@ -1,10 +1,10 @@
 module.exports = {
 
-    props:['files'],
+    props:['directory'],
 
     methods: {
-        select(path) {
-            fmBroadcast.$emit('fm-select', path)
+        open(path) {
+            bus.$emit('fm-select', path)
         }
     }
 }

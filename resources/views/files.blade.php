@@ -1,7 +1,9 @@
-<fm-files :files="{{ json_encode($directory->files) }}" inline-template>
+<fm-files :directory="viewDirectory" inline-template v-if="viewDirectory">
     <div class="flex flex-col">
-            <button v-for="file in files" @click="select(file.path)" class="block px-4 py-2 border-b border-gray-400 flex items-center focus:outline-none hover:bg-gray-200">
-                @include('filemanager::_svg.document')
+            <button v-for="file in directory.files" @click="open(file.path)" class="block px-4 py-2 border-b border-gray-400 flex items-center focus:outline-none hover:bg-gray-200">
+                <div class="">
+                    @include('filemanager::_svg.document')
+                </div>
                 <div class="ml-4" v-text="file.name"></div>
             </button>
             {{--        <button class="block focus:outline-none p-2 w-24 h-24 hover:bg-gray-300 rounded-lg">--}}

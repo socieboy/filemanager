@@ -6,13 +6,31 @@ use Illuminate\Validation\ValidationException;
 
 class DirectoryController
 {
-    public function store()
+    public function index()
     {
         $data = request()->validate(['path' => 'required']);
-        if(filemanager()->filesystem()->exists($data['path'])){
+        return response([
+            'directory' => filemanager()->directory($data['path'])
+        ]);
+    }
+
+    public function store()
+    {
+        $data = request()->validate([
+            'path' => 'required',
+            'name' => 'required',
+        ]);
+        $newFolder = $data['path'] . $data['name'];
+        if(filemanager()->filesystem()->exists($newFolder)){
             throw ValidationException::withMessages(['error' => 'The Directory already exists.']);
         }
-        filemanager()->filesystem()->makeDirectory($data['path']);
+        filemanager()->filesystem()->makeDirectory($newFolder);
+        return response([
+            'directory' => [
+                'name' => $data['name'],
+                'path' => $newFolder
+            ]
+        ]);
     }
 
     public function update()

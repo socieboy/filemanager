@@ -12,31 +12,18 @@
 
         <div id="filemanager" class="flex flex-col items-stretch h-full w-full md:rounded-lg md:shadow-xl">
 
-            <div id="header" class="w-full h-12 px-4 flex items-center justify-between bg-gray-200 md:rounded-t border-b border-gray-400">
-                <h1 class="font-semibold tracking-wide uppercase text-teal-700">File Manager</h1>
-               <div class="flex">
-                   <button @click="displayDropzone = !displayDropzone"
-                           class="block px-4 py-1 rounded text-sm m-0 border-2 font-semibold text-teal-700 border-teal-700 focus:outline-none hover:bg-teal-700 hover:text-white">
-                       Upload File
-                   </button>
-                   <button @click="createDirectory(`{{ $directory->path }}`)" class="ml-2 block px-4 py-1 rounded text-sm m-0 border-2 font-semibold text-teal-700 border-teal-700 focus:outline-none hover:bg-teal-700 hover:text-white">
-                       Create Folder
-                   </button>
-               </div>
-            </div>
+                @include('filemanager::header')
 
-            <div id="body" class="flex flex-1 items-stretch flex-col-reverse md:flex-row ">
-                @include('filemanager::preview')
-                <div id="content" class="flex-1 md:flex-none md:w-3/4 bg-gray-100 overflow-y-scroll">
-                    @include('filemanager::dropzone')
-                    @include('filemanager::folders')
-                    @include('filemanager::files')
+                <div id="body" class="flex flex-1 items-stretch flex-col-reverse md:flex-row ">
+                    @include('filemanager::preview')
+                    <div id="content" class="flex-auto bg-gray-100 overflow-y-scroll">
+                        @include('filemanager::dropzone')
+                        @include('filemanager::folders')
+                        @include('filemanager::files')
+                    </div>
                 </div>
-            </div>
 
-            <div id="footer" class="w-full h-10 px-5 flex items-center bg-gray-300 md:rounded-b text-gray-600 border-t border-gray-400">
-                @include('filemanager::footer')
-            </div>
+{{--                @include('filemanager::footer')--}}
 
         </div>
 
