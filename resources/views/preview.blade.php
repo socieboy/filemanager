@@ -1,7 +1,7 @@
 <fm-preview inline-template>
     <div  v-if="onPreview" id="preview" class="text-sm  md:w-1/4 p-4 bg-gray-100 border-t md:border-0 md:border-r border-gray-400">
 
-        <h3 class="mb-2 text-xs font-semibold tracking-wide uppercase flex justify-between">
+        <h3 class="mb-2 text-xs font-semibold tracking-wide uppercase flex justify-between items-center">
             Preview
             <button class="bg-teal-600 px-3 py-1 rounded-lg text-white font-semibold focus:outline-none hover:bg-teal-700" @click="onPreview = null">Close</button>
         </h3>
