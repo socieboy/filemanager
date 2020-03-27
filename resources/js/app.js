@@ -38,6 +38,11 @@ window.app = new Vue({
         // fmBroadcast.$on('dropzone-success', () => {
         //     location.reload()
         // });
+        
+        bus.$on('dropzone-success', () => {
+            this.displayDropzone = false;
+            this.openDirectory(this.viewDirectory.path);
+        })
     },
 
     methods:{
