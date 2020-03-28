@@ -30,8 +30,8 @@
                    <fm-preview></fm-preview>
                    <div id="content" class="flex-auto bg-gray-100 overflow-y-scroll">
                        <fm-dropzone :path="viewDirectory.path" v-if="displayDropzone"></fm-dropzone>
-                       @include('filemanager::folders')
-                       @include('filemanager::files')
+                       <fm-folders :directory="viewDirectory"></fm-folders>
+                       <fm-files :directory="viewDirectory"></fm-files>
                    </div>
                </div>
 

@@ -17,16 +17,17 @@ Vue.prototype.$prettyBytes = require('pretty-bytes');
 // Components
 Vue.component('fm-breadcrumb', require('./components/Breadcrumb').default);
 Vue.component('fm-dropzone', require('./components/Dropzone').default);
+Vue.component('fm-dropdown', require('./components/Dropdown').default);
+Vue.component('fm-folders', require('./components/Folders').default);
 Vue.component('fm-preview', require('./components/Preview').default);
-Vue.component('fm-dropdown', require('./components/Dropdown'));
-Vue.component('fm-files', require('./components/Files'));
+Vue.component('fm-files', require('./components/Files').default);
 
 window.bus = new Vue();
 window.app = new Vue({
 
     el: '#filemanager',
 
-    data(){
+    data() {
         return {
             displayDropzone: false,
             viewDirectory: null,
@@ -34,24 +35,26 @@ window.app = new Vue({
     },
 
     created() {
-       this.initDirectory();
+        this.initDirectory();
+
         bus.$on('open-directory', path => {
             this.openDirectory(path);
         })
+
         bus.$on('dropzone-success', response => {
             this.openDirectory(this.viewDirectory.path);
         })
     },
 
-    methods:{
+    methods: {
 
-        initDirectory(){
+        initDirectory() {
             const urlParams = new URLSearchParams(window.location.search);
             var initPath = urlParams.has('path') ? urlParams.get('path') : '/';
             this.openDirectory(initPath);
         },
 
-        openDirectory(path){
+        openDirectory(path) {
             this.displayDropzone = false;
             this.$http.get(`/filemanager/directory?path=${path}`).then(response => {
                 this.viewDirectory = response.data.directory
@@ -60,10 +63,13 @@ window.app = new Vue({
             });
         },
 
-        createDirectory(){
+        createDirectory() {
             var name = prompt('Directory Name:');
-            if(name){
-                this.$http.post(`/filemanager/directory`, {path: this.viewDirectory.path, name: name}).then(response => {
+            if (name) {
+                this.$http.post(`/filemanager/directory`, {
+                    path: this.viewDirectory.path,
+                    name: name
+                }).then(response => {
                     this.viewDirectory.subdirectories.push(response.data.directory)
                 }).catch(error => {
                     alert(error.response.data.message)
