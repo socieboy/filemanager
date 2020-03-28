@@ -45,7 +45,6 @@ window.app = new Vue({
 
     methods:{
         openDirectory(path){
-            console.log(path)
             this.displayDropzone = false;
             this.$http.get(`/filemanager/directory?path=${path}`).then(response => {
                 this.viewDirectory = response.data.directory

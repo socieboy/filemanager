@@ -23741,7 +23741,7 @@ var render = function() {
                 "mb-2 text-xs font-semibold tracking-wide uppercase flex justify-between items-center"
             },
             [
-              _vm._v("\n        Preview\n        "),
+              _vm._v("\n            Preview\n            "),
               _c(
                 "button",
                 {
@@ -23871,69 +23871,14 @@ var render = function() {
                     "mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700",
                   on: {
                     click: function($event) {
-                      return _vm.copy(_vm.onPreview.path)
-                    }
-                  }
-                },
-                [_vm._v("Copy")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700"
-                },
-                [_vm._v("Move")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700",
-                  on: {
-                    click: function($event) {
                       return _vm.remove(_vm.onPreview.path)
                     }
                   }
                 },
                 [_vm._v("Remove")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700"
-                },
-                [_vm._v("Share")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700"
-                },
-                [_vm._v("Permissions")]
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700",
-              on: {
-                click: function($event) {
-                  return _vm.paste("{{ $directory->path }}")
-                }
-              }
-            },
-            [_vm._v("Paste")]
-          )
+          ])
         ]
       )
     : _vm._e()
@@ -23945,7 +23890,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "vjs-no-js" }, [
       _vm._v(
-        "\n                    To view this video please enable JavaScript, and consider upgrading to a web browser that\n                    "
+        "\n                        To view this video please enable JavaScript, and consider upgrading to a web browser that\n                        "
       ),
       _c(
         "a",
@@ -36188,7 +36133,6 @@ window.app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     openDirectory: function openDirectory(path) {
       var _this2 = this;
 
-      console.log(path);
       this.displayDropzone = false;
       this.$http.get("/filemanager/directory?path=".concat(path)).then(function (response) {
         _this2.viewDirectory = response.data.directory;
