@@ -1,5 +1,5 @@
 <template>
-    <div id="breadcrumb" class="flex w-full">
+    <div id="breadcrumb" class="flex">
         <div>
             <a :href="returnUrl">Home</a>
         </div>
@@ -31,15 +31,32 @@
         },
 
         methods: {
-            parseLinks() {
-                this.links = _.map(this.path.split("/").filter(item => {
+
+            linksParts(){
+                return this.path.split("/").filter(item => {
                     return item.trim();
-                }), item => {
+                })
+            },
+
+            parseLinks() {
+                this.links = _.map(this.linksParts(), (item, index) => {
                     return {
-                        'name': item,
-                        'path': '#',
+                        index: index,
+                        name: item,
+                        path: this.resolvePath(item, index),
                     }
                 })
+            },
+
+            resolvePath(item, index) {
+                var path = '';
+                var parts = this.linksParts();
+                for (var i in parts) {
+                    if (i <= index) {
+                        path += '/' + parts[i]
+                    }
+                }
+                return path;
             },
 
             openFolder(path) {

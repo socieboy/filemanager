@@ -9,9 +9,11 @@ class DirectoryController
     public function index()
     {
         $data = request()->validate(['path' => 'required']);
+
         return response([
             'directory' => filemanager()->directory($data['path'])
         ]);
+
     }
 
     public function store()

@@ -13,6 +13,7 @@ Vue.prototype.$http = require('axios');
 Vue.prototype.$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.prototype.$csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 Vue.prototype.$prettyBytes = require('pretty-bytes');
+Vue.prototype.$pluralize = require('pluralize')
 
 // Components
 Vue.component('fm-breadcrumb', require('./components/Breadcrumb').default);
@@ -50,7 +51,7 @@ window.app = new Vue({
 
         initDirectory() {
             const urlParams = new URLSearchParams(window.location.search);
-            var initPath = urlParams.has('path') ? urlParams.get('path') : '/';
+            var initPath = (urlParams.has('path') && urlParams.get('path') != '') ? urlParams.get('path') : '/';
             this.openDirectory(initPath);
         },
 
@@ -60,6 +61,9 @@ window.app = new Vue({
                 this.viewDirectory = response.data.directory
                 history.pushState({}, this.viewDirectory.name, `/filemanager?path=${this.viewDirectory.path}`)
                 bus.$emit('directory', this.viewDirectory)
+            }).catch(({response}) => {
+                console.log(response.data.errors)
+                alert(response.data.errors.error[0])
             });
         },
 

@@ -36,10 +36,9 @@
 
             <div id="footer" class="w-full h-10 px-5 flex items-center bg-gray-300 md:rounded-b text-gray-600 border-t border-gray-400">
                 <fm-breadcrumb return-url="{{ url(config('filemanager.return_url')) }}" :path="viewDirectory.path"></fm-breadcrumb>
-                <div class="ml-auto">
-                    {{--        <span v-text="`${viewDirectory.subdirectories.length} directories and ${viewDirectory.files.length} files.`"></span>--}}
-                    {{--        {{ $directory->directories->count() }} {{ str_plural('directory', $directory->directories->count()) }} @if($directory->files->count())and {{ $directory->files->count() }} {{ str_plural('file', $directory->files->count()) }} @endif on this path.--}}
-                </div>
+                <div class="ml-auto" v-text="`${viewDirectory.subdirectories.length} ${$pluralize('directory', viewDirectory.subdirectories.length)} and ${viewDirectory.files.length} ${$pluralize('file', viewDirectory.files.length)}.`"></div>
+    {{--        {{ $directory->directories->count() }} {{ str_plural('directory', $directory->directories->count()) }} @if($directory->files->count())and {{ $directory->files->count() }} {{ str_plural('file', $directory->files->count()) }} @endif on this path.--}}
+
             </div>
 
         </div>

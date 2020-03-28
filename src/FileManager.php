@@ -3,6 +3,7 @@
 namespace Socieboy\FileManager;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\ValidationException;
 use Socieboy\FileManager\Contracts\Directory;
 use Socieboy\FileManager\Contracts\File;
 
@@ -24,6 +25,9 @@ class FileManager
 
     public function directory($path)
     {
+        if ($path != '/' && !$this->filesystem->exists($path)) {
+            throw ValidationException::withMessages(['error' => "The directory \"{$path}\" does not exist."]);
+        }
         return new Directory($this->filesystem, $path);
     }
 
