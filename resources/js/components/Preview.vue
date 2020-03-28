@@ -1,5 +1,5 @@
-<fm-preview inline-template>
-    <div  v-if="onPreview" id="preview" class="text-sm  md:w-1/4 p-4 bg-gray-100 border-t md:border-0 md:border-r border-gray-400">
+<template>
+    <div v-if="onPreview" id="preview" class="text-sm  md:w-1/4 p-4 bg-gray-100 border-t md:border-0 md:border-r border-gray-400">
 
         <h3 class="mb-2 text-xs font-semibold tracking-wide uppercase flex justify-between items-center">
             Preview
@@ -36,13 +36,70 @@
         </div>
         <div id="actions">
             <div id="group">
-{{--                    <button @click="copy(onPreview.path)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Copy</button>--}}
-{{--                    <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Move</button>--}}
+                <button @click="copy(onPreview.path)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Copy</button>
+                <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Move</button>
                 <button @click="remove(onPreview.path)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Remove</button>
-{{--                    <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Share</button>--}}
-{{--                    <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Permissions</button>--}}
+                <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Share</button>
+                <button class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Permissions</button>
             </div>
         </div>
-{{--        <button @click="paste(`{{ $directory->path }}`)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Paste</button>--}}
+        <button @click="paste(`{{ $directory->path }}`)" class="mb-1 bg-blue-600 px-3 py-1 rounded text-white focus:outline-none hover:bg-blue-700">Paste</button>
     </div>
-</fm-preview>
+</template>
+<script>
+export default {
+
+    data() {
+        return {
+            onPreview: null,
+        }
+    },
+
+    created() {
+        bus.$on('fm-select', path => {
+            this.displayPreview(path);
+        })
+    },
+
+    methods: {
+        displayPreview(path) {
+            this.$http.get(`/filemanager/file?path=${path}`).then(response => {
+                this.onPreview = response.data;
+            })
+        },
+
+        remove(path) {
+            var result = confirm('Do you want to delete this file?');
+            if (result) {
+                this.$http.delete(`/filemanager/file`, {data: {path: path}}).then(data => {
+                    location.reload()
+                }).catch(error => {
+                    alert(error.response.data.message)
+                })
+            }
+        }
+    },
+
+    computed: {
+        isVideo() {
+            return this.onPreview && this.onPreview.mimetype.includes('video');
+        },
+
+        isImage() {
+            return this.onPreview && this.onPreview.mimetype.includes('image');
+        },
+
+        isText() {
+            return this.onPreview && (this.onPreview.mimetype.includes('text/plain') || this.onPreview.mimetype.includes('officedocument'));
+        },
+
+        isPDF() {
+            return this.onPreview && this.onPreview.mimetype.includes('application/pdf');
+        },
+
+        isUnknow() {
+            return this.onPreview && (this.onPreview.mimetype == undefined);
+        }
+    }
+}
+</script>

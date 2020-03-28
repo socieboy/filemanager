@@ -6,11 +6,34 @@ use Illuminate\Filesystem\FilesystemAdapter;
 
 class Directory
 {
-    public $path;
-    public $name;
+    /**
+     * @var FilesystemAdapter
+     */
     protected $filesystem;
+
+    /**
+     * The directory path.
+     */
+    public $path;
+
+    /**
+     * Name of the directory.
+     */
+    public $name;
+
+    /**
+     * Parent path of the current directory.
+     */
     public $parentPath;
+
+    /**
+     * Subdirectories in the current directory.
+     */
     public $subdirectories;
+
+    /**
+     * Files in the current directory.
+     */
     public $files;
 
     public function __construct(FilesystemAdapter $filesystem, $path)
@@ -19,43 +42,32 @@ class Directory
         $this->path = $path;
         $this->name = ($path == '/') ? 'root' : basename($path);
         $this->parentPath = ($path == '/') ? null : dirname($path);
-        $this->subdirectories();
         $this->files();
+        $this->subdirectories();
     }
 
+    /**
+     * Load all subdirectories.
+     */
     public function subdirectories()
     {
         $this->subdirectories = collect($this->filesystem->directories($this->path))->map(function ($dir) {
             return (object)[
                 'name' => basename($dir),
-                'path' => ($dir == '/') ? '/' : '/'.basename($dir)
+                'path' => ($dir == '/') ? '/' : ('/' . $dir)
             ];
         });
     }
 
+    /**
+     * Load all files.
+     */
     public function files()
     {
         $this->files = collect($this->filesystem->files($this->path))->map(function ($file) {
             return new File($this->filesystem, $file);
-        })->filter(function($file){
-            return !in_array($file->extension, config('filemanager.ignore_extensions'));
+        })->reject(function ($file) {
+            return in_array($file->extension, config('filemanager.ignore_extensions'));
         });
     }
-
-    public function breadcrumb()
-    {
-        $breadcrumb = collect();
-        if(!empty($this->path)) {
-            foreach (explode('/', $this->path) as $part) {
-                $breadcrumb->push([
-                    'name' => $part,
-                    'path' => substr($this->path, 0, (strpos($this->path, $part) + strlen($part)))
-                ]);
-            }
-        }
-        return $breadcrumb->map(function($item){
-            return (object) $item;
-        });
-    }
-
 }

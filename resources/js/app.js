@@ -15,9 +15,10 @@ Vue.prototype.$csrfToken = document.head.querySelector('meta[name="csrf-token"]'
 Vue.prototype.$prettyBytes = require('pretty-bytes');
 
 // Components
+Vue.component('fm-breadcrumb', require('./components/Breadcrumb').default);
+Vue.component('fm-dropzone', require('./components/Dropzone').default);
+Vue.component('fm-preview', require('./components/Preview').default);
 Vue.component('fm-dropdown', require('./components/Dropdown'));
-Vue.component('fm-dropzone', require('./components/Dropzone'));
-Vue.component('fm-preview', require('./components/Preview'));
 Vue.component('fm-files', require('./components/Files'));
 
 window.bus = new Vue();
@@ -34,24 +35,24 @@ window.app = new Vue({
 
     created() {
         this.openDirectory('/');
-        // fmBroadcast.$on('dropzone-success', this.displayDropzone = false);
-        // fmBroadcast.$on('dropzone-success', () => {
-        //     location.reload()
-        // });
-        
-        bus.$on('dropzone-success', () => {
-            this.displayDropzone = false;
+        bus.$on('open-directory', path => {
+            this.openDirectory(path);
+        })
+        bus.$on('dropzone-success', response => {
             this.openDirectory(this.viewDirectory.path);
         })
     },
 
     methods:{
         openDirectory(path){
+            console.log(path)
+            this.displayDropzone = false;
             this.$http.get(`/filemanager/directory?path=${path}`).then(response => {
                 this.viewDirectory = response.data.directory
                 bus.$emit('directory', this.viewDirectory)
             });
         },
+
         createDirectory(){
             var name = prompt('Directory Name:');
             if(name){

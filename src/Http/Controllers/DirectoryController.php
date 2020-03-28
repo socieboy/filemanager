@@ -20,7 +20,7 @@ class DirectoryController
             'path' => 'required',
             'name' => 'required',
         ]);
-        $newFolder = $data['path'] . $data['name'];
+        $newFolder = $data['path'] . '/' . $data['name'];
         if(filemanager()->filesystem()->exists($newFolder)){
             throw ValidationException::withMessages(['error' => 'The Directory already exists.']);
         }

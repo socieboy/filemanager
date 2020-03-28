@@ -1,4 +1,4 @@
-<fm-files :directory="viewDirectory" inline-template v-if="viewDirectory">
+<fm-files :directory="viewDirectory" inline-template >
     <div class="flex flex-col">
             <button v-for="file in directory.files" @click="open(file.path)" class="block px-4 py-2 border-b border-gray-400 flex items-center focus:outline-none hover:bg-gray-200">
                 <div class="">

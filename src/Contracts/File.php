@@ -18,9 +18,7 @@ class File
         $this->path = $path;
         $this->name = basename($path);
         $this->fetchVisibility();
-        // Get info
-        $info = pathinfo($this->name);
-        $this->extension = $info['extension'];
+        $this->extension = pathinfo($this->name)['extension'];
     }
 
     public function withData()
