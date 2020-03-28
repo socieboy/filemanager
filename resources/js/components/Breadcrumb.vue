@@ -1,9 +1,17 @@
 <template>
     <div id="breadcrumb" class="flex w-full">
-        <a :href="returnUrl">Home</a>
+        <div>
+            <a :href="returnUrl">Home</a>
+        </div>
+        <div>
+            <a @click="openFolder('/')" href="#" class="hover:text-blue-700">
+                <span class="ml-1">/</span>
+                Root
+            </a>
+        </div>
         <div v-for="link in links">
             <span class="ml-1">/</span>
-            <a :href="link.path" class="hover:text-blue-700" v-text="link.name"></a>
+            <a href="#" @click="openFolder(link.path)" class="hover:text-blue-700" v-text="link.name"></a>
         </div>
     </div>
 </template>
@@ -32,6 +40,10 @@
                         'path': '#',
                     }
                 })
+            },
+
+            openFolder(path) {
+                bus.$emit('open-directory', path)
             }
         },
 

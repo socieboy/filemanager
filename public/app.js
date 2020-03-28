@@ -1917,6 +1917,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['returnUrl', 'path'],
   data: function data() {
@@ -1937,6 +1945,9 @@ __webpack_require__.r(__webpack_exports__);
           'path': '#'
         };
       });
+    },
+    openFolder: function openFolder(path) {
+      bus.$emit('open-directory', path);
     }
   },
   watch: {
@@ -23814,7 +23825,28 @@ var render = function() {
     "div",
     { staticClass: "flex w-full", attrs: { id: "breadcrumb" } },
     [
-      _c("a", { attrs: { href: _vm.returnUrl } }, [_vm._v("Home")]),
+      _c("div", [
+        _c("a", { attrs: { href: _vm.returnUrl } }, [_vm._v("Home")])
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "a",
+          {
+            staticClass: "hover:text-blue-700",
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                return _vm.openFolder("/")
+              }
+            }
+          },
+          [
+            _c("span", { staticClass: "ml-1" }, [_vm._v("/")]),
+            _vm._v("\n            Root\n        ")
+          ]
+        )
+      ]),
       _vm._v(" "),
       _vm._l(_vm.links, function(link) {
         return _c("div", [
@@ -23822,8 +23854,13 @@ var render = function() {
           _vm._v(" "),
           _c("a", {
             staticClass: "hover:text-blue-700",
-            attrs: { href: link.path },
-            domProps: { textContent: _vm._s(link.name) }
+            attrs: { href: "#" },
+            domProps: { textContent: _vm._s(link.name) },
+            on: {
+              click: function($event) {
+                return _vm.openFolder(link.path)
+              }
+            }
           })
         ])
       })
