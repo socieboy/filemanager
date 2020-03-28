@@ -13,4 +13,6 @@ return [
     'max_upload_filesize' => 1024,
 
     'ignore_extensions' => ['gitignore'],
+
+    'temporary_url_expired_time' => 5,
 ];

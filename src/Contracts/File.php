@@ -6,12 +6,38 @@ use Illuminate\Filesystem\FilesystemAdapter;
 
 class File
 {
-    public $path;
-    public $name;
-    public $extension;
+    /**
+     * @var FilesystemAdapter
+     */
     protected $filesystem;
+
+    /**
+     * Visibility of the file.
+     */
     protected $visibility;
 
+
+    /**
+     * The file path.
+     */
+    public $path;
+
+    /**
+     * Name of the file.
+     */
+    public $name;
+
+    /**
+     * Extension of the file.
+     */
+    public $extension;
+
+    /**
+     * File constructor.
+     *
+     * @param FilesystemAdapter $filesystem
+     * @param $path
+     */
     public function __construct(FilesystemAdapter $filesystem, $path)
     {
         $this->filesystem = $filesystem;
@@ -21,6 +47,12 @@ class File
         $this->extension = pathinfo($this->name)['extension'];
     }
 
+    /**
+     * Return the file with the metada information.
+     *
+     * @return array
+     * @throws \League\Flysystem\FileNotFoundException
+     */
     public function withData()
     {
         $metadata = $this->filesystem->getMetadata($this->path);
@@ -33,27 +65,46 @@ class File
         return array_merge($metadata, $data);
     }
 
-
-    public function getUrl()
+    /**
+     * Return the url for the file depending if is private of public.
+     *
+     * @return string
+     */
+    protected function getUrl()
     {
         if ($this->isPrivate() && config('filemanager.disk') != 'public') {
-            return $this->filesystem->temporaryUrl($this->path, now()->addMinutes(5));
+            return $this->filesystem->temporaryUrl($this->path, now()->addMinutes(config('filemanager.temporary_url_expired_time')));
         }
         return $this->filesystem->url($this->path);
     }
 
-    public function fetchVisibility()
+    /**
+     * Load the visibility of the file.
+     *
+     * @return $this
+     */
+    protected function fetchVisibility()
     {
         $this->visibility = $this->filesystem->getVisibility($this->path);
         return $this;
     }
 
-    public function isPublic()
+    /**
+     * Return if the file is public.
+     *
+     * @return bool
+     */
+    protected function isPublic()
     {
         return $this->visibility == 'public';
     }
 
-    public function isPrivate()
+    /**
+     * Return if the file is private.
+     *
+     * @return bool
+     */
+    protected function isPrivate()
     {
         return $this->visibility == 'private';
     }

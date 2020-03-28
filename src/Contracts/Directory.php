@@ -36,6 +36,12 @@ class Directory
      */
     public $files;
 
+    /**
+     * Directory constructor.
+     *
+     * @param FilesystemAdapter $filesystem
+     * @param $path
+     */
     public function __construct(FilesystemAdapter $filesystem, $path)
     {
         $this->filesystem = $filesystem;
