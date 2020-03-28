@@ -2181,6 +2181,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['directory'],
   methods: {
@@ -24640,9 +24642,9 @@ var render = function() {
       "h3",
       {
         staticClass:
-          "bg-gray-700 p-4 py-2 flex items-center text-white text-sm font-semibold tracking-widest uppercase"
+          "bg-gray-700 p-4 py-2 flex items-center justify-between text-white text-sm font-semibold tracking-widest uppercase"
       },
-      [_vm._v("Content")]
+      [_vm._v("\n        Content\n    ")]
     ),
     _vm._v(" "),
     _c(
