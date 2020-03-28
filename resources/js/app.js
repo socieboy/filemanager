@@ -34,7 +34,7 @@ window.app = new Vue({
     },
 
     created() {
-        this.openDirectory('/');
+       this.initDirectory();
         bus.$on('open-directory', path => {
             this.openDirectory(path);
         })
@@ -44,10 +44,18 @@ window.app = new Vue({
     },
 
     methods:{
+
+        initDirectory(){
+            const urlParams = new URLSearchParams(window.location.search);
+            var initPath = urlParams.has('path') ? urlParams.get('path') : '/';
+            this.openDirectory(initPath);
+        },
+
         openDirectory(path){
             this.displayDropzone = false;
             this.$http.get(`/filemanager/directory?path=${path}`).then(response => {
                 this.viewDirectory = response.data.directory
+                history.pushState({}, this.viewDirectory.name, `/filemanager?path=${this.viewDirectory.path}`)
                 bus.$emit('directory', this.viewDirectory)
             });
         },

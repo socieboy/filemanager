@@ -36121,7 +36121,7 @@ window.app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   created: function created() {
     var _this = this;
 
-    this.openDirectory('/');
+    this.initDirectory();
     bus.$on('open-directory', function (path) {
       _this.openDirectory(path);
     });
@@ -36130,12 +36130,18 @@ window.app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     });
   },
   methods: {
+    initDirectory: function initDirectory() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var initPath = urlParams.has('path') ? urlParams.get('path') : '/';
+      this.openDirectory(initPath);
+    },
     openDirectory: function openDirectory(path) {
       var _this2 = this;
 
       this.displayDropzone = false;
       this.$http.get("/filemanager/directory?path=".concat(path)).then(function (response) {
         _this2.viewDirectory = response.data.directory;
+        history.pushState({}, _this2.viewDirectory.name, "/filemanager?path=".concat(_this2.viewDirectory.path));
         bus.$emit('directory', _this2.viewDirectory);
       });
     },
