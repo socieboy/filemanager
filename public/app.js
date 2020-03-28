@@ -1924,11 +1924,24 @@ __webpack_require__.r(__webpack_exports__);
       links: []
     };
   },
+  created: function created() {
+    this.parseLinks();
+  },
+  methods: {
+    parseLinks: function parseLinks() {
+      this.links = _.map(this.path.split("/").filter(function (item) {
+        return item.trim();
+      }), function (item) {
+        return {
+          'name': item,
+          'path': '#'
+        };
+      });
+    }
+  },
   watch: {
     path: function path() {
-      this.links = this.path.split("/").filter(function (item) {
-        return item.trim();
-      });
+      this.parseLinks();
     }
   }
 });
@@ -23809,8 +23822,8 @@ var render = function() {
           _vm._v(" "),
           _c("a", {
             staticClass: "hover:text-blue-700",
-            attrs: { href: "#" },
-            domProps: { textContent: _vm._s(link) }
+            attrs: { href: link.path },
+            domProps: { textContent: _vm._s(link.name) }
           })
         ])
       })

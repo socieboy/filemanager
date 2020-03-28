@@ -25,7 +25,6 @@
                 </div>
             </div>
 
-
             <div id="body" class="flex flex-1 items-stretch flex-col-reverse md:flex-row">
                    <fm-preview></fm-preview>
                    <div id="content" class="flex-auto bg-gray-100 overflow-y-scroll">
