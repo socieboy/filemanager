@@ -22,6 +22,7 @@ Vue.component('fm-dropdown', require('./components/Dropdown').default);
 Vue.component('fm-folders', require('./components/Folders').default);
 Vue.component('fm-preview', require('./components/Preview').default);
 Vue.component('fm-files', require('./components/Files').default);
+Vue.component('fm-modal', require('./components/Modal').default);
 Vue.component('fm-svg', require('./components/Svg').default);
 
 window.bus = new Vue();

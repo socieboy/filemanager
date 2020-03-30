@@ -12,6 +12,14 @@
 
         <div id="filemanager" class="flex flex-col items-stretch h-full w-full md:rounded-lg md:shadow-xl"v-if="viewDirectory">
 
+            <fm-modal name="visibility">
+                <template v-slot:title>Modal</template>
+                My Body
+                <template v-slot:footer>
+                    <button class="bg-blue-600 text-white px-3 py-1 ml-auto rounded-md" >Button</button>
+                </template>
+            </fm-modal>
+
             <div id="header" class="w-full h-12 px-4 py-2 md:py-0 flex items-center justify-between bg-gray-200 md:rounded-t border-b border-gray-400">
                 <h1 class="font-semibold tracking-wide uppercase text-teal-700">File Manager</h1>
                 <div class="flex" v-if="viewDirectory">
