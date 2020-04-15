@@ -20,7 +20,7 @@ class FileManager
 
     public function uploadFile($path, UploadedFile $file)
     {
-        return $this->filesystem->putFileAs($path, $file, $file->getClientOriginalName());
+        return $this->filesystem->putFileAs($path, $file, $file->getClientOriginalName(), config('filemanager.visibility'));
     }
 
     public function directory($path)

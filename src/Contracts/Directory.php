@@ -59,6 +59,7 @@ class Directory
     {
         $this->subdirectories = collect($this->filesystem->directories($this->path))->map(function ($dir) {
             return (object)[
+                'parentPath' => $this->path,
                 'name' => basename($dir),
                 'path' => ($dir == '/') ? '/' : ('/' . $dir)
             ];

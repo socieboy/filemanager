@@ -7,9 +7,9 @@
             </svg>
         </button>
         <div v-if="isOpen" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl z-10" @click="isOpen = false">
-            <a @click="renameFolder()" href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white">Rename</a>
-            <a href="#visibility" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white">Visibility</a>
-            <div class="border border-gray-200 my-1 mx-2"></div>
+<!--            <a @click="renameFolder()" href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white">Rename</a>-->
+<!--            <a href="#visibility" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white">Visibility</a>-->
+<!--            <div class="border border-gray-200 my-1 mx-2"></div>-->
             <a @click="removeFolder()" href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white">Delete</a>
         </div>
     </div>
@@ -26,7 +26,6 @@
             }
         },
 
-
         created() {
             const handleEscape = (e) => {
                 if (e.key === 'Esc' || e.key === 'Escape') {
@@ -41,27 +40,27 @@
 
         methods:{
 
-            updateVisibility(){
-
-            },
-
-            renameFolder(){
-                var name = prompt('New name:');
-                if(name) {
-                    this.$http.patch(`/filemanager/directory`, {path: this.directory.path, name: name}).then(response => {
-                        this.folder.name = name;
-                        this.isOpen = false;
-                    }).catch(error => {
-                        alert(error.response.data.message)
-                    })
-                }
-            },
+            // updateVisibility(){
+            //
+            // },
+            //
+            // renameFolder(){
+            //     var name = prompt('New name:');
+            //     if(name) {
+            //         this.$http.patch(`/filemanager/directory`, {path: this.directory.path, name: name}).then(response => {
+            //             this.folder.name = name;
+            //             this.isOpen = false;
+            //         }).catch(error => {
+            //             alert(error.response.data.message)
+            //         })
+            //     }
+            // },
 
             removeFolder(){
                 var response = confirm('Confirm this action:');
                 if(response) {
-                    this.$http.delete(`/filemanager/directory`, {data: { path: this.directory.path }}).then(data => {
-                        bus.$emit('open-directory', this.directory.path)
+                    this.$http.delete(`/filemanager/directory`, {data: { path: this.folder.path }}).then(data => {
+                        bus.$emit('open-directory', this.folder.parentPath)
                     }).catch(error => {
                         console.log(error.response.data.message)
                     })

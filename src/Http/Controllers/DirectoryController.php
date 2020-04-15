@@ -9,7 +9,6 @@ class DirectoryController
     public function index()
     {
         $data = request()->validate(['path' => 'required']);
-
         return response([
             'directory' => filemanager()->directory($data['path'])
         ]);
@@ -29,6 +28,7 @@ class DirectoryController
         filemanager()->filesystem()->makeDirectory($newFolder);
         return response([
             'directory' => [
+                'parentPath' => $data['path'],
                 'name' => $data['name'],
                 'path' => $newFolder
             ]

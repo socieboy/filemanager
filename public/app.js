@@ -212,36 +212,33 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    updateVisibility: function updateVisibility() {},
-    renameFolder: function renameFolder() {
-      var _this2 = this;
-
-      var name = prompt('New name:');
-
-      if (name) {
-        this.$http.patch("/filemanager/directory", {
-          path: this.directory.path,
-          name: name
-        }).then(function (response) {
-          _this2.folder.name = name;
-          _this2.isOpen = false;
-        })["catch"](function (error) {
-          alert(error.response.data.message);
-        });
-      }
-    },
+    // updateVisibility(){
+    //
+    // },
+    //
+    // renameFolder(){
+    //     var name = prompt('New name:');
+    //     if(name) {
+    //         this.$http.patch(`/filemanager/directory`, {path: this.directory.path, name: name}).then(response => {
+    //             this.folder.name = name;
+    //             this.isOpen = false;
+    //         }).catch(error => {
+    //             alert(error.response.data.message)
+    //         })
+    //     }
+    // },
     removeFolder: function removeFolder() {
-      var _this3 = this;
+      var _this2 = this;
 
       var response = confirm('Confirm this action:');
 
       if (response) {
         this.$http["delete"]("/filemanager/directory", {
           data: {
-            path: this.directory.path
+            path: this.folder.path
           }
         }).then(function (data) {
-          bus.$emit('open-directory', _this3.directory.path);
+          bus.$emit('open-directory', _this2.folder.parentPath);
         })["catch"](function (error) {
           console.log(error.response.data.message);
         });
@@ -1832,33 +1829,6 @@ var render = function() {
             }
           },
           [
-            _c(
-              "a",
-              {
-                staticClass:
-                  "block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    return _vm.renameFolder()
-                  }
-                }
-              },
-              [_vm._v("Rename")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "block px-4 py-2 text-gray-800 hover:bg-gray-700 hover:text-white",
-                attrs: { href: "#visibility" }
-              },
-              [_vm._v("Visibility")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "border border-gray-200 my-1 mx-2" }),
-            _vm._v(" "),
             _c(
               "a",
               {
@@ -38614,8 +38584,8 @@ module.exports = JSON.parse("{\"folder\":\"M18.208,2.958H8.875V1.792c0-0.644-0.5
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/socieboy/Sites/socieboy/packages/Socieboy/FileManager/resources/js/app.js */"./packages/Socieboy/FileManager/resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/socieboy/Sites/socieboy/packages/Socieboy/FileManager/resources/css/app.css */"./packages/Socieboy/FileManager/resources/css/app.css");
+__webpack_require__(/*! /Users/socieboy/Sites/filemanagerapp/packages/Socieboy/FileManager/resources/js/app.js */"./packages/Socieboy/FileManager/resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/socieboy/Sites/filemanagerapp/packages/Socieboy/FileManager/resources/css/app.css */"./packages/Socieboy/FileManager/resources/css/app.css");
 
 
 /***/ })
