@@ -16,7 +16,6 @@ class File
      */
     protected $visibility;
 
-
     /**
      * The file path.
      */
@@ -56,12 +55,13 @@ class File
     public function withData()
     {
         $metadata = $this->filesystem->getMetadata($this->path);
-        $metadata['mimetype'] = isset($metadata['mimetype']) ? $metadata['mimetype']: $this->filesystem->getMimetype($this->path);
+        $metadata['mimetype'] = isset($metadata['mimetype']) ? $metadata['mimetype'] : $this->filesystem->getMimetype($this->path);
         $data = [
             'filename' => $this->name,
             'url' => $this->getUrl(),
             'visibility' =>  $this->visibility,
         ];
+
         return array_merge($metadata, $data);
     }
 
@@ -75,6 +75,7 @@ class File
         if ($this->isPrivate() && config('filemanager.disk') != 'public') {
             return $this->filesystem->temporaryUrl($this->path, now()->addMinutes(config('filemanager.temporary_url_expired_time')));
         }
+
         return $this->filesystem->url($this->path);
     }
 
@@ -86,6 +87,7 @@ class File
     protected function fetchVisibility()
     {
         $this->visibility = $this->filesystem->getVisibility($this->path);
+
         return $this;
     }
 

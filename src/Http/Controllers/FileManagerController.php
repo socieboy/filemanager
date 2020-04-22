@@ -2,7 +2,6 @@
 
 namespace Socieboy\FileManager\Http\Controllers;
 
-
 class FileManagerController
 {
     public function index()

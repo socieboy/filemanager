@@ -25,9 +25,10 @@ class FileManager
 
     public function directory($path)
     {
-        if ($path != '/' && !$this->filesystem->exists($path)) {
+        if ($path != '/' && ! $this->filesystem->exists($path)) {
             throw ValidationException::withMessages(['error' => "The directory \"{$path}\" does not exist."]);
         }
+
         return new Directory($this->filesystem, $path);
     }
 
