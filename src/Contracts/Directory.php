@@ -71,10 +71,10 @@ class Directory
      */
     public function files()
     {
-        $this->files = collect($this->filesystem->files($this->path))->map(function ($file) {
-            return new File($this->filesystem, $file);
-        })->reject(function ($file) {
-            return in_array($file->extension, config('filemanager.ignore_extensions'));
-        });
+      $this->files = collect($this->filesystem->files($this->path))->map(function ($file) {
+        return new File($this->filesystem, $file);
+      })->reject(function ($file) {
+        return in_array($file->extension, config('filemanager.ignore_extensions'));
+      });
     }
 }
