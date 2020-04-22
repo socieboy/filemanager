@@ -31,7 +31,7 @@ class FileManagerServiceProvider extends ServiceProvider
             'namespace' => 'Socieboy\FileManager\Http\Controllers',
             'middleware' => config('filemanager.middleware', 'web'),
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
     }
 
@@ -42,7 +42,7 @@ class FileManagerServiceProvider extends ServiceProvider
      */
     protected function registerResources()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'filemanager');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'filemanager');
     }
 
     /**
@@ -54,11 +54,10 @@ class FileManagerServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                FILEMANAGER_PATH . '/public' => public_path('vendor/filemanager'),
+                FILEMANAGER_PATH.'/public' => public_path('vendor/filemanager'),
             ], 'filemanager-assets');
         }
     }
-
 
     /**
      * Register any package services.
@@ -68,7 +67,7 @@ class FileManagerServiceProvider extends ServiceProvider
     public function register()
     {
         if (! defined('FILEMANAGER_PATH')) {
-            define('FILEMANAGER_PATH', realpath(__DIR__ . '/../'));
+            define('FILEMANAGER_PATH', realpath(__DIR__.'/../'));
         }
 
         $this->configure();
@@ -78,7 +77,7 @@ class FileManagerServiceProvider extends ServiceProvider
             return new FileManager();
         });
 
-        require_once __DIR__ . '/helpers.php';
+        require_once __DIR__.'/helpers.php';
     }
 
     /**

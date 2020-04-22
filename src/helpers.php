@@ -1,6 +1,6 @@
 <?php
 
-if(!function_exists('filemanager')) {
+if (! function_exists('filemanager')) {
     /**
      * A short cut to access the file manager instance.
      *

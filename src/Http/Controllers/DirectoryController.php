@@ -9,10 +9,10 @@ class DirectoryController
     public function index()
     {
         $data = request()->validate(['path' => 'required']);
-        return response([
-            'directory' => filemanager()->directory($data['path'])
-        ]);
 
+        return response([
+            'directory' => filemanager()->directory($data['path']),
+        ]);
     }
 
     public function store()
@@ -21,17 +21,18 @@ class DirectoryController
             'path' => 'required',
             'name' => 'required',
         ]);
-        $newFolder = $data['path'] . '/' . $data['name'];
-        if(filemanager()->filesystem()->exists($newFolder)){
+        $newFolder = $data['path'].'/'.$data['name'];
+        if (filemanager()->filesystem()->exists($newFolder)) {
             throw ValidationException::withMessages(['error' => 'The Directory already exists.']);
         }
         filemanager()->filesystem()->makeDirectory($newFolder);
+
         return response([
             'directory' => [
                 'parentPath' => $data['path'],
                 'name' => $data['name'],
-                'path' => $newFolder
-            ]
+                'path' => $newFolder,
+            ],
         ]);
     }
 
@@ -39,9 +40,9 @@ class DirectoryController
     {
         $data = request()->validate([
             'path' => 'required',
-            'name' => 'required'
+            'name' => 'required',
         ]);
-        $newPath = dirname($data['path']) . '/' . $data['name'];
+        $newPath = dirname($data['path']).'/'.$data['name'];
         filemanager()->filesystem()->move($data['path'], $newPath);
     }
 
@@ -50,5 +51,4 @@ class DirectoryController
         $data = request()->validate(['path' => 'required']);
         filemanager()->filesystem()->deleteDirectory($data['path']);
     }
-
 }

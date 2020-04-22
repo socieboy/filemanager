@@ -6,14 +6,14 @@ use Socieboy\FileManager\Http\Request\UploadFileRequest;
 
 class FileController
 {
-
     public function store(UploadFileRequest $request)
     {
         extract($request->validate([
             'path' => '',
-            'file' => 'required|file'
+            'file' => 'required|file',
         ]));
         $key = filemanager()->uploadFile($path, $file);
+
         return filemanager()->file($key);
     }
 
@@ -21,11 +21,11 @@ class FileController
     {
         $data = request()->validate([
             'origin' => 'required',
-            'destination' => 'required'
+            'destination' => 'required',
         ]);
         do {
             $int = '-';
-            $newPath = dirname($data['origin']) . '/copy' . $int . basename($data['origin']);
+            $newPath = dirname($data['origin']).'/copy'.$int.basename($data['origin']);
             $int++;
         } while (filemanager()->filesystem()->exists($newPath));
 
