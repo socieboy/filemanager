@@ -11,7 +11,7 @@
     "homepage": "https://github.com/socieboy/filemanager",
     "keywords": ["Socieboy", "Laravel", "FileManager"],
     "require": {
-        "illuminate/support": "~5|~6|~7|~8",
+        "illuminate/support": "~5|~6|~7|~8|~9",
         "laravel/helpers": "^1.2"
     },
     "require-dev": {
